@@ -1,0 +1,6 @@
+CREATE TABLE links (
+    id SERIAL PRIMARY KEY,
+    long_url VARCHAR(300) NOT NULL,
+    short_id VARCHAR(30) NOT NULL,
+    createdAt TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
