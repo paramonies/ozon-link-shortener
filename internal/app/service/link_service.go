@@ -20,3 +20,7 @@ func (s *LinkService) CreateLink(input string) (model.ClientLink, error) {
 func (s *LinkService) GetShortLink(url string) string {
 	return s.repo.GetShortLink(url)
 }
+
+func (s *LinkService) GetLongLink(id string) (string, error) {
+	return s.repo.GetLongLink(id)
+}

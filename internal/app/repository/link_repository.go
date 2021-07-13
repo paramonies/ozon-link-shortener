@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"database/sql"
+	"errors"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
@@ -53,4 +55,19 @@ func (r *LinkRepository) CreateLink(url string) (model.ClientLink, error) {
 	}
 
 	return model.ClientLink{Url: shortUrl}, tx.Commit()
+}
+
+func (r *LinkRepository) GetLongLink(id string) (string, error) {
+	selectQuery := fmt.Sprintf("SELECT long_url FROM %s WHERE short_id = $1", LINKTABLE)
+	row := r.DB.QueryRow(selectQuery, id)
+	var result string
+	if err := row.Scan(&result); err != nil {
+		switch {
+		case err == sql.ErrNoRows:
+			return result, errors.New("long link not found")
+		default:
+			return result, err
+		}
+	}
+	return result, nil
 }
