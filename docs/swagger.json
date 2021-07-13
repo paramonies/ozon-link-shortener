@@ -1,0 +1,162 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Cервис для сокращения ссылок",
+        "title": "Link Shorter Rest Service",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/long": {
+            "post": {
+                "description": "Получить полную ссылку по сокращенному id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LongLink"
+                ],
+                "summary": "получить полную ссылку",
+                "operationId": "get-long-link",
+                "parameters": [
+                    {
+                        "description": "short id",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.InputLongLink"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.ClientLink"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GetShortLinkMessage400"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GetShortLinkMessage500"
+                        }
+                    }
+                }
+            }
+        },
+        "/short": {
+            "post": {
+                "description": "Создать новую или получить существующую сокращенную ссылку",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ShortLink"
+                ],
+                "summary": "создать или получить сокращенную ссылку",
+                "operationId": "get-short-link",
+                "parameters": [
+                    {
+                        "description": "long http link",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.InputShortLink"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ClientLink"
+                        }
+                    },
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.ClientLink"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GetShortLinkMessage400"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GetShortLinkMessage500"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.GetShortLinkMessage400": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "invalid response body"
+                }
+            }
+        },
+        "controller.GetShortLinkMessage500": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "internal server error"
+                }
+            }
+        },
+        "controller.InputLongLink": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "example": "8wSnscuTr6"
+                }
+            }
+        },
+        "controller.InputShortLink": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "example": "https://test.ru"
+                }
+            }
+        },
+        "model.ClientLink": {
+            "type": "object",
+            "required": [
+                "url"
+            ],
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

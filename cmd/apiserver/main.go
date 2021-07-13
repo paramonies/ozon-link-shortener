@@ -14,6 +14,12 @@ func init() {
 	flag.StringVar(&configPath, "config-path", "configs/apiserver.toml", "path to config file")
 }
 
+// @title Link Shorter Rest Service
+// @version 1.0
+// @description Cервис для сокращения ссылок
+
+// @host localhost:8080
+// @BasePath /
 func main() {
 	flag.Parse()
 	config := apiserver.NewConfig()

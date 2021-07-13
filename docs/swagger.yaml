@@ -1,0 +1,107 @@
+basePath: /
+definitions:
+  controller.GetShortLinkMessage400:
+    properties:
+      error:
+        example: invalid response body
+        type: string
+    type: object
+  controller.GetShortLinkMessage500:
+    properties:
+      error:
+        example: internal server error
+        type: string
+    type: object
+  controller.InputLongLink:
+    properties:
+      url:
+        example: 8wSnscuTr6
+        type: string
+    type: object
+  controller.InputShortLink:
+    properties:
+      url:
+        example: https://test.ru
+        type: string
+    type: object
+  model.ClientLink:
+    properties:
+      url:
+        type: string
+    required:
+    - url
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Cервис для сокращения ссылок
+  title: Link Shorter Rest Service
+  version: "1.0"
+paths:
+  /long:
+    post:
+      consumes:
+      - application/json
+      description: Получить полную ссылку по сокращенному id
+      operationId: get-long-link
+      parameters:
+      - description: short id
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/controller.InputLongLink'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.ClientLink'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.GetShortLinkMessage400'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.GetShortLinkMessage500'
+      summary: получить полную ссылку
+      tags:
+      - LongLink
+  /short:
+    post:
+      consumes:
+      - application/json
+      description: Создать новую или получить существующую сокращенную ссылку
+      operationId: get-short-link
+      parameters:
+      - description: long http link
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/controller.InputShortLink'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ClientLink'
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.ClientLink'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.GetShortLinkMessage400'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.GetShortLinkMessage500'
+      summary: создать или получить сокращенную ссылку
+      tags:
+      - ShortLink
+swagger: "2.0"

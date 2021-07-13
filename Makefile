@@ -8,4 +8,8 @@ GOTEST=$(GOCMD) test ./...
 build: 
 	${GOBUILD} -v -o apiserver ./cmd/apiserver
 
+.PHONY: swag
+swag:
+	swag init -g ./cmd/apiserver/main.go 
+
 .DEFAULT_GOAL := build
