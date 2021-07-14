@@ -12,4 +12,14 @@ build:
 swag:
 	swag init -g ./cmd/apiserver/main.go 
 
+.PHONY: test
+test:
+	$(GOTEST)
+
+# Generates a coverage report
+.PHONY: cover
+cover:
+	${GOCMD} test -coverprofile=coverage.out ./... && ${GOCMD} tool cover -html=coverage.out
+
+
 .DEFAULT_GOAL := build
