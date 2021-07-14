@@ -49,7 +49,7 @@ func Start(config *Config) error {
 	srv := new(Server)
 	go func() {
 		if err := srv.Run(config.SrvPort, controller.InitRoutes()); err != nil {
-			log.Fatalf("error occured while running http server: %s", err.Error())
+			log.Fatalf(err.Error())
 		}
 	}()
 	log.Printf("APIServer Started on %s:%s", config.SrvHost, config.SrvPort)
@@ -60,7 +60,7 @@ func Start(config *Config) error {
 	<-quit
 	log.Print("APIServer Shutting Down")
 	if err := srv.Shutdown(context.Background()); err != nil {
-		return fmt.Errorf("error occured on APIServer shutting down: %s", err.Error())
+		return fmt.Errorf("Shutdown: %s", err.Error())
 	}
 
 	if err := db.Close(); err != nil {
